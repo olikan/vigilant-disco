@@ -1,0 +1,15 @@
+{
+  "name": "vendor_name/olikan",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "olya",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "livolikan/parenthesis_fixer": "dev-master"
+  }
+}

@@ -10,6 +10,7 @@
     }
   ],
   "require": {
-    "livolikan/parenthesis_fixer": "dev-master"
+    "livolikan/parenthesis_fixer": "dev-master",
+    "ext-sockets": "*"
   }
 }

@@ -11,6 +11,7 @@
   ],
   "require": {
     "livolikan/parenthesis_fixer": "dev-master",
-    "ext-sockets": "*"
+    "ext-sockets": "*",
+    "symfony/yaml": "^3.2"
   }
 }

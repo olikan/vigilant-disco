@@ -5,17 +5,23 @@ error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 set_time_limit(0);
 ob_implicit_flush();
 
-$address = '127.0.0.1';
-$port = 6000;
-$max_clients = 10;
+use Symfony\Component\Yaml\Yaml;
+
+try {
+    $config = Yaml::parseFile(__DIR__ . '/config/conf.yml');
+} catch (Exception $e) {
+    echo 'Exception: ',  $e->getMessage(), "\n";
+}
+
+define("MAX_CLIENTS", 10);
 
 $sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP) or die("Couldn't create socket: " . socket_strerror(socket_last_error()) . PHP_EOL);
 echo "Socket created \n";
 
-socket_bind($sock, $address , $port) or die("Couldn't bind socket: " . socket_strerror(socket_last_error()) . PHP_EOL);
+socket_bind($sock, $config['address'] , $config['port']) or die("Couldn't bind socket: " . socket_strerror(socket_last_error()) . PHP_EOL);
 echo "Socket bind OK \n";
 
-socket_listen ($sock , $max_clients) or die("Couldn't listen socket: " . socket_strerror(socket_last_error()) . PHP_EOL);
+socket_listen ($sock , MAX_CLIENTS) or die("Couldn't listen socket: " . socket_strerror(socket_last_error()) . PHP_EOL);
 echo "Socket listen OK \n";
 
 echo "Waiting for incoming connections... \n";
@@ -50,8 +56,8 @@ while (true) {
             if ($client_socks[$i] == null) {
                 $client_socks[$i] = socket_accept($sock);
 
-                if (socket_getpeername($client_socks[$i], $address, $port)) {
-                    echo "Client $address : $port is now connected to us. \n";
+                if (socket_getpeername($client_socks[$i], $config['address'], $config['port'])) {
+                    echo "Client " . $config['address'] . ": " . $config['port'] . " is now connected to us. \n";
                 }
 
                 break;
